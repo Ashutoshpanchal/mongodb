@@ -12,5 +12,23 @@ services:
       MONGO_INITDB_ROOT_USERNAME: admin  # Set the root username
       MONGO_INITDB_ROOT_PASSWORD: secretpassword  # Set the root password
 
+  couchbase:
+    image: couchbase:community
+    container_name: couchbase
+    ports:
+      - "8091-8096:8091-8096"
+      - "11210:11210"
+    volumes:
+      - couchbase_data:/opt/couchbase/var
+    environment:
+      - COUCHBASE_ADMINISTRATOR_USERNAME=admin
+      - COUCHBASE_ADMINISTRATOR_PASSWORD=password
+      - COUCHBASE_BUCKET=my-bucket
+      - COUCHBASE_BUCKET_TYPE=couchbase
+      - COUCHBASE_BUCKET_RAMSIZE=1024
+
 volumes:
   mongo_data:  # Define the named volume for data persistence
+  couchbase_data:
+    driver: local
+
